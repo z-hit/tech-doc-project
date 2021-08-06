@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Technical docuentation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <nav id="navbar">
+        <header>
+            <a href="#Introduction" id="main-title"><h1 id="nav-header">Node</h1></a>
+        </header>
+        <a href="#Introduction" class="nav-link">Introduction</a>
+        <a href="#Properties" class="nav-link">Properties</a>
+        <a href="#Methods" class="nav-link">Methods</a>
+        <a href="#Examples" class="nav-link">Examples</a>
+        <a href="#Specifications" class="nav-link">Specifications</a>
+    </nav>
+
+    <main id="main-doc">
+        <section id="Introduction" class="main-section">
+            <header>
+                <h1>Introduction</h1>
+            </header>
+            <p>The DOM Node interface is an abstract base class upon which many other DOM API objects are based, thus
+                letting those object types to be used similarly and often interchangeably. As an abstract class, there
+                is no such thing as a plain Node object. All objects that implement Node functionality are based on one
+                of its subclasses. Most notable are Document, Element, and DocumentFragment.</p>
+            <p>In addition, every kind of DOM node is represented by an interface based on Node. These include Attr,
+                CharacterData (which Text, Comment, CDATASection and ProcessingInstruction are all based on), and
+                DocumentType.</p>
+            <p>In some cases, a particular feature of the base Node interface may not apply to one of its child
+                interfaces; in that case, the inheriting node may return null or throw an exception, depending on
+                circumstances. For example, attempting to add children to a node type that cannot have children will
+                throw an exception.</p>
+            <div id="Node-table">
+                <div class="node-table-box">EventTarget</div>
+                <div id="arrow">&#8592;</div>
+                <div class="node-table-box">Node</div>
+            </div>
+        </section>
+
+        <section id="Properties" class="main-section">
+            <header>
+                <h1>Properties</h1>
+            </header>
+            <p>In addition to the properties below, Node inherits properties from its parent, EventTarget.</p>
+            <ul>
+                <li> <a href="/">Node.baseURI</a>
+                    <p class="read-only">Read only</p>
+                    <p>Returns a DOMString representing the base URL of the document containing the Node.</p>
+                </li>
+                <li> <a href="/">Node.childNodes</a>
+                    <p class="read-only">Read only</p>
+                    <p>Returns a live NodeList containing all the children of this node (including elements, text and
+                        comments).
+                        NodeList being live means that if the children of the Node change, the NodeList object is
+                        automatically
+                        updated.</p>
+                </li>
+                <li> <a href="/">Node.firstChild</a>
+                    <p class="read-only">Read only</p>
+                    <p>Returns a Node representing the first direct child node of the node, or null if the node has no
+                        child.
+                    </p>
+                </li>
+            </ul>
+
+        </section>
+
+        <section id="Methods" class="main-section">
+            <header>
+                <h1>Methods</h1>
+            </header>
+            <p>In addition to the properties below, Node inherits methods from its parent, EventTarget.</p>
+
+            <ul>
+                <li> <a href="/">Node.appendChild(childNode)</a>
+                    <p>Adds the specified childNode argument as the last child to the current node.
+                        If the argument referenced an existing node on the DOM tree, the node will be detached from its
+                        current
+                        position and attached at the new position.</p>
+                </li>
+                <li> <a href="/">Node.cloneNode()</a>
+                    <p>Clone a Node, and optionally, all of its contents. By default, it clones the content of the node.
+                    </p>
+                </li>
+                <li> <a href="/">Node.compareDocumentPosition()</a>
+                    <p>Compares the position of the current node against another node in any other document.</p>
+                </li>
+
+            </ul>
+
+            <h2>Obsolete methods 🗑️</h2>
+
+            <ul>
+                <li> <a href="/">Node.hasAttributes()</a>
+                    <p>Returns true or false indicating if the element has any attributes, or not.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="Examples" class="main-section">
+            <header>
+                <h1>Examples</h1>
+            </header>
+            <h2>Remove all children nested within a node</h2>
+
+            <pre><code>
+                function removeAllChildren(element) {
+                while (element.firstChild) {
+                element.removeChild(element.firstChild)
+                }
+                }
+            </code></pre>
+            <p>Sample usage</p>
+            <div class="code">
+                <pre><code>
+                    /* Note: or use document.body.textContent = "" */
+                    removeAllChildren(document.body)
+                </code></pre>
+            </div>
+
+
+            <h2>Recurse through child nodes</h2>
+            <p>The following function recursively calls a callback function for each node contained by a root node
+                (including the root itself):</p>
+            <div class="code">
+                <pre><code>function eachNode(rootNode, callback) {
+                    if (!callback) {
+                    const nodes = []
+                    eachNode(rootNode, function(node) {
+                    nodes.push(node)
+                    })
+                    return nodes
+                    }
+
+                    if (false === callback(rootNode)) {
+                    return false
+                    }
+
+                    if (rootNode.hasChildNodes()) {
+                    const nodes = rootNode.childNodes
+                    for (let i = 0, l = nodes.length; i < l; ++i) { if (false===eachNode(nodes[i], callback)) { return }
+                        } } } </code></pre>
+            </div>
+            <p>Syntax</p>
+            <div class="code">
+                <pre><code>
+                    eachNode(rootNode, callback)
+                </code></pre>
+            </div>
+
+            <h2>Description</h2>
+            <p>Recursively calls a function for each descendant node of rootNode (including the root
+                itself).
+            </p>
+            <p>If callback is omitted, the function returns an Array instead, which contains rootNode and
+                all
+                nodes contained within.</p>
+            <p>If callback is provided, and it returns false when called, the current recursion level is
+                aborted, and the function resumes execution at the last parent's level. This can be used to
+                abort loops once a node has been found (such as searching for a text node which contains a
+                certain string).</p>
+
+            <h2>Parameters</h2>
+            <ul>
+                <li> <a href="/">rootNode</a>
+                    <p>The Node object whose descendants will be recursed through.</p>
+                </li>
+                <li> <a href="/">callback</a>
+                    <p class="read-only">Optional</p>
+                    <p>An optional callback function that receives a Node as its only argument. If omitted, eachNode
+                        returns an
+                        Array of every node contained within rootNode (including the root itself).</p>
+                </li>
+            </ul>
+
+
+            <h2>Sample usage</h2>
+            <p>The following example prints the textContent properties of each &lt;span&gt; element in a &lt;div&gt;
+                element named "box":</p>
+            <div class="code">
+                <pre><code>
+                    &lt;div id="box"&gt;
+                    &lt;span&gt;Foo&lt;/span&gt;
+                    &lt;span&gt;Bar&lt;/span&gt;
+                    &lt;span&gt;Baz&lt;/span&gt;
+                    &lt;/div></code></pre>
+            </div>
+
+            <div class="code">
+                <pre>
+                <code>const box = document.getElementById("box")
+                    eachNode(box, function(node) {
+                      if (null != node.textContent) {
+                        console.log(node.textContent)
+                      }
+                    })</code>
+            </pre>
+            </div>
+
+            <p>The above will result in the following strings printing to the user's console:</p>
+
+            <div class="code">
+                <pre>
+                <code>
+                    "\n\t", "Foo", "\n\t", "Bar", "\n\t", "Baz"
+                </code>
+            </pre>
+            </div>
+
+            <div class="note">
+                <p><strong>Note:</strong> Whitespace forms part of a Text node, meaning indentation and newlines form separate Text
+                    between the Element nodes.</p>
+            </div>
+
+            <h2>Realistic usage</h2>
+            <p>The following demonstrates a real-world use of the eachNode() function: searching for text on a web-page.
+            </p>
+            <p>We use a wrapper function named grep to do the searching:</p>
+            <div class="code">
+                <pre>
+                <code>function grep(parentNode, pattern) {
+                    const matches = []
+                    let endScan = false
+                
+                    eachNode(parentNode, function(node){
+                        if (endScan) {
+                            return false
+                    }
+                
+                        // Ignore anything which isn't a text node
+                        if (node.nodeType !== Node.TEXT_NODE) {
+                            return
+                    }
+                
+                        if (typeof pattern === "string") {
+                            if (-1 !== node.textContent.indexOf(pattern)) {
+                                matches.push(node)
+                      }
+                        }
+                        else if (pattern.test(node.textContent)) {
+                            if (!pattern.global) {
+                                endScan = true
+                                matches = node
+                            }
+                            else {
+                        matches.push(node)
+                      }
+                        }
+                    })
+                
+                    return matches
+                }</code>
+            </pre>
+            </div>
+
+            <p>For example, to find Text nodes that contain typos:</p>
+            <div class="code">
+                <pre>
+                <code>const typos = ["teh", "adn", "btu", "adress", "youre", "msitakes"]
+                    const pattern = new RegExp("\\b(" + typos.join("|") + ")\\b", "gi")
+                    const mistakes = grep(document.body, pattern)
+                    console.log(mistakes)
+                    </code>
+            </pre>
+            </div>
+
+        </section>
+
+        <section id="Specifications" class="main-section">
+            <header>
+                <h1>Specifications</h1>
+            </header>
+            <a href="/">DOM Standard (DOM)</a>
+            <a href="/"># interface-node</a>
+
+        </section>
+
+    </main>
+
+    <script src="" async defer></script>
+</body>
+
+</html>
